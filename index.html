@@ -1,439 +1,2060 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>iTochWeb | iTochPooYa</title>
+    <title>iToch World | Cyber Nexus</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@300;400;600;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Exo+2:wght@200;300;400;600;800&family=Audiowide&family=Black+Ops+One&family=Montserrat:wght@200;300;400;600;800&family=Tomorrow:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
-        /* Reset & Base */
+        /* ========== CSS RESET & GLOBAL VARIABLES ========== */
+        :root {
+            --itochie-cyan: #00ffff;
+            --itochie-blue: #0066ff;
+            --itochie-purple: #9d00ff;
+            --itochie-pink: #ff00ff;
+            --itochie-green: #00ff41;
+            --itochie-yellow: #ffff00;
+            --itochie-red: #ff0033;
+            --itochie-black: #050510;
+            --itochie-dark: #0a0a1a;
+            --itochie-darker: #03030f;
+            --itochie-electric: #00aaff;
+            --itochie-plasma: #cc00ff;
+            --itochie-glow: #00ffcc;
+            
+            --glow-intensity: 1.2;
+            --animation-speed: 0.4s;
+            --blur-intensity: 20px;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            scroll-behavior: smooth;
         }
 
-        :root {
-            --primary: #00d9ff;
-            --secondary: #9d00ff;
-            --dark: #0a0a16;
-            --darker: #050510;
-            --code-bg: #1a1a2e;
-            --gaming-bg: #1a0022;
-            --text: #f0f0f0;
-            --glow: 0 0 15px var(--primary);
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+            background: #000000;
+            font-family: 'Exo 2', sans-serif;
         }
 
         body {
-            background: var(--darker);
-            color: var(--text);
-            overflow-x: hidden;
-            line-height: 1.6;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(0, 102, 255, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 90% 80%, rgba(157, 0, 255, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(255, 0, 255, 0.03) 0%, transparent 70%),
+                linear-gradient(135deg, #000000 0%, #050510 30%, #0a0a1a 70%, #000000 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            position: relative;
+            background-attachment: fixed;
         }
 
-        /* Particles Background */
-        #particles-js {
+        /* ========== FIXED BACKGROUND ELEMENTS ========== */
+        .background-elements {
             position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
             z-index: -1;
+            pointer-events: none;
+            overflow: hidden;
         }
 
-        /* Header & Logo Animation */
-        header {
-            position: fixed;
+        .floating-particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--itochie-cyan);
+            border-radius: 50%;
+            filter: blur(1px);
+            opacity: 0.6;
+            animation: floatParticle 20s infinite linear;
+        }
+
+        @keyframes floatParticle {
+            0% {
+                transform: translateY(100vh) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-100px) translateX(100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .grid-overlay {
+            position: absolute;
             top: 0;
+            left: 0;
+            width: 200%;
+            height: 200%;
+            background-image: 
+                linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            animation: gridMove 40s linear infinite;
+            opacity: 0.2;
+        }
+
+        @keyframes gridMove {
+            0% {
+                transform: translateX(0) translateY(0);
+            }
+            100% {
+                transform: translateX(-60px) translateY(-60px);
+            }
+        }
+
+        /* ========== MAIN CONTAINER ========== */
+        .main-container {
             width: 100%;
-            padding: 20px 40px;
+            min-height: 100vh;
+            position: relative;
+            z-index: 1;
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
             align-items: center;
-            z-index: 1000;
-            background: rgba(5, 5, 16, 0.9);
-            backdrop-filter: blur(10px);
+            padding: 20px;
         }
 
-        .logo {
-            font-size: 2rem;
-            font-weight: 900;
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-shadow: var(--glow);
-        }
-
-        .logo span {
-            color: #ff0066;
-        }
-
-        /* Hero Section */
-        .hero {
+        /* ========== IMPROVED LANDING SECTION ========== */
+        .landing-section {
+            width: 100%;
+            max-width: 1200px;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 0 20px;
+            position: relative;
+            padding: 40px 20px;
+            margin: 0 auto;
+        }
+
+        .title-wrapper {
             text-align: center;
+            margin-bottom: 60px;
+            width: 100%;
+            position: relative;
+            z-index: 2;
         }
 
-        .code-icon {
-            font-size: 15rem;
-            color: var(--primary);
-            margin-bottom: 30px;
-            animation: float 3s ease-in-out infinite, glow 2s infinite alternate;
-            cursor: pointer;
-            transition: all 0.5s ease;
-        }
-
-        .code-icon.small {
-            font-size: 3rem;
-            position: fixed;
-            top: 20px;
-            right: 120px;
-            animation: none;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-        }
-
-        @keyframes glow {
-            from { filter: drop-shadow(0 0 10px var(--primary)); }
-            to { filter: drop-shadow(0 0 25px var(--secondary)); }
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
+        .main-title {
+            font-family: 'Black Ops One', cursive;
+            font-size: clamp(3.5rem, 10vw, 6rem);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
             margin-bottom: 20px;
-            background: linear-gradient(90deg, #00d9ff, #ff00cc);
+            position: relative;
+            background: linear-gradient(
+                45deg,
+                var(--itochie-cyan) 0%,
+                var(--itochie-blue) 20%,
+                var(--itochie-purple) 40%,
+                var(--itochie-pink) 60%,
+                var(--itochie-cyan) 80%
+            );
+            background-size: 300% 300%;
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+            animation: titleFlow 8s ease infinite;
+            text-shadow: 
+                0 0 30px rgba(0, 255, 255, 0.4),
+                0 0 60px rgba(0, 255, 255, 0.2);
+            line-height: 1.1;
+            padding: 0 20px;
         }
 
-        .hero p {
-            font-size: 1.5rem;
-            max-width: 800px;
+        @keyframes titleFlow {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .subtitle {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            color: var(--itochie-cyan);
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            margin-top: 20px;
+            animation: subtitlePulse 3s infinite ease-in-out;
+            position: relative;
+            display: inline-block;
+            padding: 0 20px;
+        }
+
+        @keyframes subtitlePulse {
+            0%, 100% {
+                opacity: 0.8;
+                text-shadow: 
+                    0 0 15px var(--itochie-cyan),
+                    0 0 30px rgba(0, 102, 255, 0.4);
+            }
+            50% {
+                opacity: 1;
+                text-shadow: 
+                    0 0 25px var(--itochie-cyan),
+                    0 0 50px var(--itochie-blue);
+            }
+        }
+
+        /* ========== IMPROVED ACCESS BUTTONS ========== */
+        .access-container {
+            width: 100%;
+            max-width: 900px;
+            margin: 40px auto;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .access-button {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            height: 120px;
+            border-radius: 20px;
+            background: rgba(10, 10, 30, 0.3);
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(0, 255, 255, 0.2);
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            display: flex;
+            align-items: center;
+            padding: 0 40px;
+            gap: 30px;
+        }
+
+        .access-button:hover {
+            transform: translateY(-10px);
+            border-color: var(--itochie-cyan);
+            box-shadow: 
+                0 20px 40px rgba(0, 255, 255, 0.15),
+                0 0 60px rgba(0, 255, 255, 0.1);
+        }
+
+        .access-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.1),
+                transparent
+            );
+            transition: left 0.6s ease;
+        }
+
+        .access-button:hover::before {
+            left: 100%;
+        }
+
+        .button-icon {
+            font-size: 3rem;
+            color: var(--itochie-cyan);
+            filter: drop-shadow(0 0 10px currentColor);
+            transition: all 0.3s ease;
+            min-width: 60px;
+            text-align: center;
+        }
+
+        .access-button:hover .button-icon {
+            transform: scale(1.2) rotate(10deg);
+        }
+
+        .button-content {
+            flex: 1;
+            text-align: left;
+        }
+
+        .button-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            text-shadow: 0 0 10px currentColor;
+        }
+
+        .button-description {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.4;
+        }
+
+        .pro-button {
+            border-color: rgba(0, 255, 255, 0.3);
+        }
+
+        .pro-button .button-icon {
+            color: var(--itochie-cyan);
+        }
+
+        .pro-button .button-title {
+            color: var(--itochie-cyan);
+        }
+
+        .guest-button {
+            border-color: rgba(0, 255, 65, 0.3);
+        }
+
+        .guest-button .button-icon {
+            color: var(--itochie-green);
+        }
+
+        .guest-button .button-title {
+            color: var(--itochie-green);
+        }
+
+        /* ========== IMPROVED EAGLE SECTION ========== */
+        .eagle-section {
+            width: 100%;
+            max-width: 1200px;
+            margin: 80px auto;
+            padding: 60px 40px;
+            background: rgba(5, 5, 20, 0.4);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            border: 2px solid rgba(0, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+            display: none;
+        }
+
+        .eagle-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg,
+                transparent,
+                var(--itochie-cyan),
+                var(--itochie-blue),
+                var(--itochie-purple),
+                var(--itochie-cyan),
+                transparent
+            );
+            animation: borderFlow 6s linear infinite;
+        }
+
+        @keyframes borderFlow {
+            0% { background-position: -100% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        .eagle-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 50px;
+            width: 100%;
+        }
+
+        .eagle-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            height: 400px;
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 
+                0 0 50px rgba(0, 255, 255, 0.2),
+                inset 0 0 40px rgba(0, 255, 255, 0.1);
+        }
+
+        .eagle-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: 
+                brightness(1.2)
+                contrast(1.3)
+                saturate(1.4)
+                drop-shadow(0 0 20px rgba(0, 255, 255, 0.5));
+            animation: eagleFloat 6s ease-in-out infinite;
+        }
+
+        @keyframes eagleFloat {
+            0%, 100% { 
+                transform: translateY(0) rotate(0deg);
+            }
+            50% { 
+                transform: translateY(-10px) rotate(0.5deg);
+            }
+        }
+
+        .brand-container {
+            text-align: center;
+            width: 100%;
+            padding: 0 20px;
+        }
+
+        .brand-name {
+            font-family: 'Black Ops One', cursive;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            background: linear-gradient(
+                45deg,
+                #ff0000 0%,
+                #ff5500 15%,
+                #ffaa00 30%,
+                #ffff00 45%,
+                #00ff00 60%,
+                #00ffff 75%,
+                #0066ff 90%,
+                #aa00ff 100%
+            );
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            background-size: 300% 300%;
+            animation: brandFlow 10s ease infinite;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            line-height: 1.2;
+            margin-bottom: 10px;
+        }
+
+        @keyframes brandFlow {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .brand-subtitle {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.3rem;
+            color: var(--itochie-cyan);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
             opacity: 0.9;
         }
 
-        /* Sections */
-        section {
-            padding: 100px 40px;
+        /* ========== IMPROVED PRODUCTS SECTION ========== */
+        .products-section {
+            width: 100%;
+            max-width: 1400px;
+            margin: 80px auto;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 60px;
         }
 
         .section-title {
-            font-size: 2.8rem;
+            font-family: 'Audiowide', cursive;
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            color: var(--itochie-cyan);
             text-align: center;
-            margin-bottom: 60px;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
             position: relative;
-            display: inline-block;
-            left: 50%;
-            transform: translateX(-50%);
+            padding: 0 20px;
+            width: 100%;
         }
 
         .section-title::after {
             content: '';
             position: absolute;
             bottom: -15px;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            border-radius: 2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 3px;
+            background: linear-gradient(90deg,
+                transparent,
+                var(--itochie-cyan),
+                var(--itochie-blue),
+                var(--itochie-cyan),
+                transparent
+            );
+            animation: titleLine 4s linear infinite;
         }
 
-        /* Cards */
-        .cards-container {
+        @keyframes titleLine {
+            0% { background-position: -200px 0; }
+            100% { background-position: 200px 0; }
+        }
+
+        .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
-            max-width: 1400px;
-            margin: 0 auto;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            width: 100%;
+            padding: 0 20px;
         }
 
-        .card {
-            background: var(--code-bg);
+        .product-card {
+            background: rgba(10, 10, 35, 0.4);
+            backdrop-filter: blur(15px);
             border-radius: 20px;
+            border: 2px solid rgba(0, 255, 255, 0.2);
             padding: 30px;
-            text-align: center;
-            border: 2px solid transparent;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--itochie-cyan);
+            box-shadow: 
+                0 20px 40px rgba(0, 255, 255, 0.15),
+                0 0 60px rgba(0, 255, 255, 0.1);
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg,
+                var(--itochie-cyan),
+                var(--itochie-blue),
+                var(--itochie-purple)
+            );
+            background-size: 200% 100%;
+            animation: borderFlow 4s linear infinite;
+        }
+
+        .product-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .product-icon {
+            font-size: 2.5rem;
+            color: var(--itochie-cyan);
+            filter: drop-shadow(0 0 10px var(--itochie-cyan));
+            min-width: 50px;
+        }
+
+        .product-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.8rem;
+            color: var(--itochie-cyan);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            line-height: 1.2;
+        }
+
+        .product-description {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            flex-grow: 1;
+        }
+
+        .platform-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .platform-tab {
+            padding: 10px 20px;
+            background: rgba(0, 255, 255, 0.1);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            border-radius: 10px;
+            color: white;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
             cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .platform-tab:hover {
+            background: rgba(0, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .platform-tab.active {
+            background: linear-gradient(45deg, var(--itochie-cyan), var(--itochie-blue));
+            color: #000;
+            font-weight: 700;
+            border-color: var(--itochie-cyan);
+        }
+
+        .price-container {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 25px 0;
+            text-align: center;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+        }
+
+        .price-label {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .price-value {
+            font-family: 'Orbitron', monospace;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--itochie-green);
+            text-shadow: 0 0 15px var(--itochie-green);
+        }
+
+        .price-value::after {
+            content: ' T';
+            font-size: 1.5rem;
+            color: var(--itochie-yellow);
+        }
+
+        .purchase-button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(
+                45deg,
+                var(--itochie-cyan),
+                var(--itochie-blue),
+                var(--itochie-purple)
+            );
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-family: 'Exo 2', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            transition: all 0.4s ease;
             position: relative;
             overflow: hidden;
         }
 
-        .card::before {
+        .purchase-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 255, 255, 0.3);
+            letter-spacing: 0.15em;
+        }
+
+        .purchase-button:active {
+            transform: translateY(-1px);
+        }
+
+        /* ========== IMPROVED MODAL ========== */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 5, 20, 0.95);
+            backdrop-filter: blur(20px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .modal-container {
+            background: rgba(10, 10, 35, 0.9);
+            backdrop-filter: blur(30px);
+            border-radius: 25px;
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            border: 2px solid rgba(0, 255, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .modal-container::before {
             content: '';
             position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            background: linear-gradient(45deg, var(--primary), var(--secondary), #ff0066);
-            z-index: -1;
-            border-radius: 22px;
-            opacity: 0;
-            transition: opacity 0.4s;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg,
+                var(--itochie-cyan),
+                var(--itochie-blue),
+                var(--itochie-purple)
+            );
+            animation: borderFlow 4s linear infinite;
         }
 
-        .card:hover::before {
-            opacity: 1;
+        .modal-header {
+            text-align: center;
+            margin-bottom: 30px;
         }
 
-        .card:hover {
-            transform: translateY(-15px) scale(1.03);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-        }
-
-        .card i {
+        .modal-icon {
             font-size: 4rem;
-            margin-bottom: 25px;
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: var(--itochie-cyan);
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 20px var(--itochie-cyan));
+            animation: iconPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes iconPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .modal-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 2.5rem;
+            color: var(--itochie-cyan);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 10px;
+        }
+
+        .password-input {
+            width: 100%;
+            padding: 15px 20px;
+            margin: 25px 0;
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid var(--itochie-cyan);
+            border-radius: 12px;
+            color: white;
+            font-family: 'Orbitron', monospace;
+            font-size: 1.2rem;
+            letter-spacing: 0.2em;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .password-input:focus {
+            outline: none;
+            box-shadow: 0 0 25px var(--itochie-cyan);
+            border-color: var(--itochie-blue);
+        }
+
+        .modal-info {
+            background: rgba(0, 0, 0, 0.2);
+            border-left: 4px solid var(--itochie-purple);
+            padding: 15px;
+            margin: 25px 0;
+            border-radius: 0 10px 10px 0;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .modal-info i {
+            color: var(--itochie-green);
+            margin-right: 10px;
+        }
+
+        /* ========== IMPROVED WELCOME SCREEN ========== */
+        .welcome-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #000000 0%, #050525 100%);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            padding: 20px;
+        }
+
+        .welcome-content {
+            text-align: center;
+            max-width: 800px;
+            width: 100%;
+        }
+
+        .welcome-text {
+            font-family: 'Audiowide', cursive;
+            font-size: clamp(3rem, 8vw, 5rem);
+            background: linear-gradient(
+                45deg,
+                var(--itochie-green) 0%,
+                var(--itochie-cyan) 30%,
+                var(--itochie-blue) 60%,
+                var(--itochie-green) 100%
+            );
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 30px;
+            animation: welcomeFlow 8s ease infinite;
         }
 
-        .card h3 {
+        .welcome-subtext {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.5rem;
+            color: var(--itochie-cyan);
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            animation: welcomePulse 3s ease-in-out infinite;
+        }
+
+        /* ========== IMPROVED ADMIN PANEL ========== */
+        .admin-panel {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #000000 0%, #0a0a2a 100%);
+            display: none;
+            flex-direction: column;
+            z-index: 3000;
+            padding: 40px 20px;
+            overflow-y: auto;
+        }
+
+        .admin-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid rgba(255, 0, 255, 0.3);
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto 40px;
+        }
+
+        .admin-title {
+            font-family: 'Black Ops One', cursive;
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            color: var(--itochie-pink);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px var(--itochie-pink);
+        }
+
+        .admin-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .admin-section {
+            background: rgba(157, 0, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 30px;
+            border: 2px solid rgba(255, 0, 255, 0.3);
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 0, 255, 0.3);
+        }
+
+        .section-title-admin {
+            font-family: 'Orbitron', monospace;
             font-size: 1.8rem;
+            color: var(--itochie-pink);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .requests-list, .keys-list {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .request-item, .key-item {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .request-item:hover, .key-item:hover {
+            border-color: rgba(0, 255, 255, 0.4);
+            transform: translateY(-3px);
+        }
+
+        /* ========== IMPROVED KEY DISPLAY ========== */
+        .key-display {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(10, 10, 30, 0.8);
+            backdrop-filter: blur(15px);
+            border-radius: 15px;
+            padding: 20px;
+            border: 2px solid rgba(0, 255, 255, 0.3);
+            display: none;
+            z-index: 4000;
+            min-width: 250px;
+            box-shadow: 0 10px 30px rgba(0, 255, 255, 0.2);
+        }
+
+        .key-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
             margin-bottom: 15px;
         }
 
-        .card p {
-            opacity: 0.8;
-            font-size: 1.1rem;
-        }
-
-        /* Code Section */
-        .code-section {
-            background: linear-gradient(135deg, var(--dark), #111125);
-        }
-
-        /* Gaming Section */
-        .gaming-section {
-            background: linear-gradient(135deg, var(--gaming-bg), #2a0044);
-        }
-
-        .gaming-section .card {
-            background: rgba(255, 0, 204, 0.05);
-            border-color: #ff00cc;
-        }
-
-        /* Footer & Creator */
-        footer {
-            text-align: center;
-            padding: 60px 20px;
-            background: rgba(0, 0, 0, 0.7);
-            border-top: 3px solid var(--primary);
-        }
-
-        .creator {
-            font-size: 2.5rem;
-            font-weight: 900;
-            margin-bottom: 20px;
-            background: linear-gradient(45deg, #ff0066, #9d00ff, #00d9ff);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-shadow: 0 0 20px rgba(157, 0, 255, 0.5);
-        }
-
-        /* Telegram Button */
-        .telegram-btn {
-            display: inline-block;
-            background: linear-gradient(45deg, #0088cc, #00d9ff);
-            color: white;
+        .key-icon {
             font-size: 1.5rem;
-            font-weight: bold;
-            padding: 18px 40px;
-            border-radius: 50px;
-            text-decoration: none;
-            margin-top: 40px;
-            box-shadow: 0 10px 25px rgba(0, 136, 204, 0.4);
+            color: var(--itochie-green);
+        }
+
+        .key-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.2rem;
+            color: var(--itochie-green);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .key-timer {
+            font-family: 'Orbitron', monospace;
+            font-size: 2rem;
+            color: var(--itochie-green);
+            text-align: center;
+            margin: 15px 0;
+            text-shadow: 0 0 10px var(--itochie-green);
+        }
+
+        .key-progress {
+            width: 100%;
+            height: 6px;
+            background: rgba(0, 255, 65, 0.2);
+            border-radius: 3px;
+            margin-top: 15px;
+            overflow: hidden;
+        }
+
+        .key-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--itochie-green), var(--itochie-cyan));
+            transition: width 1s linear;
+        }
+
+        /* ========== IMPROVED ABOUT SECTION ========== */
+        .about-section {
+            width: 100%;
+            max-width: 1200px;
+            margin: 80px auto;
+            padding: 60px 40px;
+            background: rgba(5, 5, 25, 0.4);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            border: 2px solid rgba(0, 255, 255, 0.2);
+            text-align: center;
+            display: none;
+        }
+
+        .about-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .about-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 2.5rem;
+            color: var(--itochie-cyan);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 10px;
+        }
+
+        .creator-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            width: 100%;
+            margin: 40px 0;
+        }
+
+        .info-card {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid rgba(0, 255, 255, 0.2);
             transition: all 0.3s ease;
-            animation: pulse 2s infinite;
         }
 
-        .telegram-btn:hover {
+        .info-card:hover {
+            border-color: var(--itochie-cyan);
             transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0, 136, 204, 0.6);
-            background: linear-gradient(45deg, #00d9ff, #0088cc);
         }
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+        .info-label {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
         }
 
-        /* Responsive */
+        .info-value {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.8rem;
+            color: var(--itochie-cyan);
+            font-weight: 700;
+        }
+
+        .telegram-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 40px;
+            background: linear-gradient(45deg, #0088cc, #00aced);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-family: 'Exo 2', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            margin-top: 30px;
+        }
+
+        .telegram-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 136, 204, 0.4);
+        }
+
+        /* ========== RESPONSIVE DESIGN ========== */
+        @media (max-width: 992px) {
+            .products-grid {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            }
+            
+            .access-button {
+                height: 100px;
+                padding: 0 30px;
+            }
+            
+            .button-icon {
+                font-size: 2.5rem;
+                min-width: 50px;
+            }
+            
+            .button-title {
+                font-size: 1.5rem;
+            }
+            
+            .admin-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
         @media (max-width: 768px) {
-            .hero h1 { font-size: 2.5rem; }
-            .code-icon { font-size: 10rem; }
-            .section-title { font-size: 2.2rem; }
-            .cards-container { grid-template-columns: 1fr; }
-            .creator { font-size: 2rem; }
+            .landing-section {
+                padding: 20px;
+            }
+            
+            .main-title {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+                letter-spacing: 0.2em;
+            }
+            
+            .access-container {
+                gap: 20px;
+            }
+            
+            .access-button {
+                flex-direction: column;
+                height: auto;
+                padding: 25px 20px;
+                text-align: center;
+            }
+            
+            .button-content {
+                text-align: center;
+            }
+            
+            .eagle-container {
+                height: 300px;
+            }
+            
+            .product-card {
+                padding: 25px;
+            }
+            
+            .product-title {
+                font-size: 1.5rem;
+            }
+            
+            .modal-container {
+                padding: 30px 20px;
+            }
+            
+            .modal-title {
+                font-size: 2rem;
+            }
+            
+            .key-display {
+                position: relative;
+                top: auto;
+                right: auto;
+                margin: 20px auto;
+                width: 90%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-title {
+                font-size: 2rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .product-card {
+                min-height: 450px;
+            }
+            
+            .platform-tab {
+                padding: 8px 15px;
+                font-size: 0.9rem;
+            }
+            
+            .price-value {
+                font-size: 2rem;
+            }
+            
+            .creator-info {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ========== UTILITY CLASSES ========== */
+        .show {
+            display: flex !important;
+        }
+
+        .show-block {
+            display: block !important;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .scrollable {
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: var(--itochie-cyan) rgba(0, 255, 255, 0.1);
+        }
+
+        .scrollable::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .scrollable::-webkit-scrollbar-track {
+            background: rgba(0, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+
+        .scrollable::-webkit-scrollbar-thumb {
+            background: var(--itochie-cyan);
+            border-radius: 4px;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .mb-20 {
+            margin-bottom: 20px;
+        }
+
+        .mb-30 {
+            margin-bottom: 30px;
+        }
+
+        .mt-40 {
+            margin-top: 40px;
         }
     </style>
 </head>
 <body>
-    <!-- Particles Background -->
-    <div id="particles-js"></div>
+    <!-- Background Elements -->
+    <div class="background-elements">
+        <div class="grid-overlay"></div>
+    </div>
 
-    <!-- Header -->
-    <header>
-        <div class="logo">iToch<span>Web</span></div>
-        <div class="telegram-btn-small">
-            <a href="https://t.me/Aynrx" target="_blank" style="color:#00d9ff; text-decoration:none;">
-                <i class="fab fa-telegram"></i> تلگرام
-            </a>
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Landing Section -->
+        <section class="landing-section">
+            <div class="title-wrapper">
+                <h1 class="main-title">iToch World</h1>
+                <p class="subtitle">Cyber Nexus</p>
+            </div>
+
+            <div class="access-container">
+                <!-- Pro Button -->
+                <div class="access-button pro-button" onclick="showLoginModal()">
+                    <div class="button-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div class="button-content">
+                        <h3 class="button-title">Pro Mode</h3>
+                        <p class="button-description">Access admin panel with full control features</p>
+                    </div>
+                    <i class="fas fa-chevron-right" style="color: var(--itochie-cyan); font-size: 1.5rem;"></i>
+                </div>
+
+                <!-- Guest Button -->
+                <div class="access-button guest-button" onclick="enterGuestMode()">
+                    <div class="button-icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="button-content">
+                        <h3 class="button-title">Guest Mode</h3>
+                        <p class="button-description">Browse products and explore iToch World</p>
+                    </div>
+                    <i class="fas fa-chevron-right" style="color: var(--itochie-green); font-size: 1.5rem;"></i>
+                </div>
+            </div>
+        </section>
+
+        <!-- Eagle Section -->
+        <section class="eagle-section">
+            <div class="eagle-content">
+                <div class="eagle-container">
+                    <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" 
+                         alt="iToch Eagle" 
+                         class="eagle-image">
+                </div>
+                <div class="brand-container">
+                    <h2 class="brand-name">iToch World</h2>
+                    <p class="brand-subtitle">PooYa | Cyber Solutions</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Products Section -->
+        <div class="products-section">
+            <!-- Call of Duty Products -->
+            <h2 class="section-title">Call of Duty Products</h2>
+            <div class="products-grid">
+                <!-- CONFIG EREN -->
+                <div class="product-card">
+                    <div class="product-header">
+                        <div class="product-icon">
+                            <i class="fas fa-gamepad"></i>
+                        </div>
+                        <h3 class="product-title">Config Eren</h3>
+                    </div>
+                    
+                    <p class="product-description">
+                        Advanced gaming configuration for enhanced performance and competitive edge.
+                        Optimized settings for maximum FPS and reduced latency.
+                    </p>
+                    
+                    <div class="platform-selector">
+                        <div class="platform-tab active" onclick="switchPlatform(this, 'android', 'eren')">
+                            Android
+                        </div>
+                        <div class="platform-tab" onclick="switchPlatform(this, 'ios', 'eren')">
+                            iOS
+                        </div>
+                    </div>
+                    
+                    <div class="price-container">
+                        <div class="price-label">Price</div>
+                        <div class="price-value" id="eren-price">400</div>
+                    </div>
+                    
+                    <button class="purchase-button" onclick="purchaseProduct('CONFIG EREN')">
+                        <i class="fas fa-shopping-cart"></i> Purchase Now
+                    </button>
+                </div>
+
+                <!-- DNS GAMING -->
+                <div class="product-card">
+                    <div class="product-header">
+                        <div class="product-icon">
+                            <i class="fas fa-network-wired"></i>
+                        </div>
+                        <h3 class="product-title">DNS Gaming</h3>
+                    </div>
+                    
+                    <p class="product-description">
+                        Optimized DNS servers for reduced latency and better connectivity.
+                        Bypass restrictions and improve ping for competitive gaming.
+                    </p>
+                    
+                    <div class="platform-selector">
+                        <div class="platform-tab active" onclick="switchPlatform(this, 'android', 'dns')">
+                            Android
+                        </div>
+                        <div class="platform-tab" onclick="switchPlatform(this, 'ios', 'dns')">
+                            iOS
+                        </div>
+                    </div>
+                    
+                    <div class="price-container">
+                        <div class="price-label">Price</div>
+                        <div class="price-value" id="dns-price">250</div>
+                    </div>
+                    
+                    <button class="purchase-button" onclick="purchaseProduct('DNS GAMING')">
+                        <i class="fas fa-shopping-cart"></i> Purchase Now
+                    </button>
+                </div>
+
+                <!-- WIREGUARD GAMING -->
+                <div class="product-card">
+                    <div class="product-header">
+                        <div class="product-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3 class="product-title">WireGuard Gaming</h3>
+                    </div>
+                    
+                    <p class="product-description">
+                        High-speed VPN configuration specifically optimized for gaming.
+                        Secure connection with minimal impact on performance.
+                    </p>
+                    
+                    <div class="platform-selector">
+                        <div class="platform-tab active" onclick="switchPlatform(this, 'android', 'wg')">
+                            Android
+                        </div>
+                        <div class="platform-tab" onclick="switchPlatform(this, 'ios', 'wg')">
+                            iOS
+                        </div>
+                    </div>
+                    
+                    <div class="price-container">
+                        <div class="price-label">Price</div>
+                        <div class="price-value" id="wg-price">300</div>
+                    </div>
+                    
+                    <button class="purchase-button" onclick="purchaseProduct('WIREGUARD GAMING')">
+                        <i class="fas fa-shopping-cart"></i> Purchase Now
+                    </button>
+                </div>
+            </div>
+
+            <!-- Coding Products -->
+            <h2 class="section-title mt-40">Coding Products</h2>
+            <div class="products-grid">
+                <!-- SecurityCyber -->
+                <div class="product-card">
+                    <div class="product-header">
+                        <div class="product-icon">
+                            <i class="fas fa-user-secret"></i>
+                        </div>
+                        <h3 class="product-title">SecurityCyber</h3>
+                    </div>
+                    
+                    <p class="product-description">
+                        Advanced security solutions and cyber protection tools.
+                        Complete security suite for personal and enterprise use.
+                    </p>
+                    
+                    <button class="purchase-button" onclick="contactForPrice('SecurityCyber')">
+                        <i class="fas fa-envelope"></i> Contact for Price
+                    </button>
+                </div>
+
+                <!-- CodePython -->
+                <div class="product-card">
+                    <div class="product-header">
+                        <div class="product-icon">
+                            <i class="fab fa-python"></i>
+                        </div>
+                        <h3 class="product-title">CodePython</h3>
+                    </div>
+                    
+                    <p class="product-description">
+                        Professional Python development tools, scripts, and utilities.
+                        Custom solutions for automation and data analysis.
+                    </p>
+                    
+                    <button class="purchase-button" onclick="contactForPrice('CodePython')">
+                        <i class="fas fa-envelope"></i> Contact for Price
+                    </button>
+                </div>
+
+                <!-- WebSite Code -->
+                <div class="product-card">
+                    <div class="product-header">
+                        <div class="product-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <h3 class="product-title">Website Code</h3>
+                    </div>
+                    
+                    <p class="product-description">
+                        Premium website templates and custom code solutions.
+                        Responsive designs with advanced animations.
+                    </p>
+                    
+                    <button class="purchase-button" onclick="contactForPrice('Website Code')">
+                        <i class="fas fa-envelope"></i> Contact for Price
+                    </button>
+                </div>
+
+                <!-- AndluaCode -->
+                <div class="product-card">
+                    <div class="product-header">
+                        <div class="product-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h3 class="product-title">AndluaCode</h3>
+                    </div>
+                    
+                    <p class="product-description">
+                        Lua scripting solutions for Android applications.
+                        Custom modules and optimized code for mobile development.
+                    </p>
+                    
+                    <button class="purchase-button" onclick="contactForPrice('AndluaCode')">
+                        <i class="fas fa-envelope"></i> Contact for Price
+                    </button>
+                </div>
+            </div>
         </div>
-    </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="code-icon" id="codeIcon">
-            <i class="fas fa-code"></i>
+        <!-- About Section -->
+        <section class="about-section">
+            <div class="about-container">
+                <h2 class="about-title">Creator Information</h2>
+                
+                <div class="creator-info">
+                    <div class="info-card">
+                        <div class="info-label">Virtual Name</div>
+                        <div class="info-value">iToch</div>
+                    </div>
+                    
+                    <div class="info-card">
+                        <div class="info-label">Real Name</div>
+                        <div class="info-value">PooYa</div>
+                    </div>
+                    
+                    <div class="info-card">
+                        <div class="info-label">Telegram ID</div>
+                        <div class="info-value">@Aynrx</div>
+                    </div>
+                    
+                    <div class="info-card">
+                        <div class="info-label">Status</div>
+                        <div class="info-value">Online</div>
+                    </div>
+                </div>
+                
+                <a href="https://t.me/Aynrx" class="telegram-button" target="_blank">
+                    <i class="fab fa-telegram"></i>
+                    Contact on Telegram
+                </a>
+            </div>
+        </section>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="modal-overlay" id="loginModal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <div class="modal-icon">
+                    <i class="fas fa-key"></i>
+                </div>
+                <h2 class="modal-title">Pro Access</h2>
+            </div>
+            
+            <input type="password" 
+                   class="password-input" 
+                   id="adminPassword"
+                   placeholder="ENTER ACCESS CODE"
+                   onkeypress="if(event.key === 'Enter') checkPassword()">
+            
+            <div class="modal-info">
+                <i class="fas fa-info-circle"></i>
+                Password: Hidden in system. Contact @Aynrx for access.
+            </div>
+            
+            <button class="purchase-button" onclick="checkPassword()">
+                <i class="fas fa-sign-in-alt"></i> Verify & Access
+            </button>
         </div>
-        <h1>iTochPooYa</h1>
-        <p>حرفه‌ای‌ترین دنیای کدنویسی و گیمینگ با مدرن‌ترین تکنولوژی‌ها</p>
-        <a href="https://t.me/Aynrx" target="_blank" class="telegram-btn">
-            <i class="fab fa-telegram"></i> خرید از پیوی تلگرام
-        </a>
-    </section>
+    </div>
 
-    <!-- Code Section -->
-    <section class="code-section">
-        <h2 class="section-title">Code iToch 1</h2>
-        <div class="cards-container">
-            <div class="card" onclick="window.open('html-page.html', '_blank')">
-                <i class="fab fa-html5"></i>
-                <h3>HTML Web</h3>
-                <p>طراحی وبسایت‌های مدرن و ریسپانسیو با جدیدترین استانداردها</p>
+    <!-- Welcome Screen -->
+    <div class="welcome-screen" id="welcomeScreen">
+        <div class="welcome-content">
+            <h1 class="welcome-text">Welcome</h1>
+            <p class="welcome-subtext">Entering iToch World...</p>
+        </div>
+    </div>
+
+    <!-- Admin Panel -->
+    <div class="admin-panel" id="adminPanel">
+        <div class="admin-header">
+            <h1 class="admin-title">Admin Control Panel</h1>
+            <p class="subtitle">iToch World Management System</p>
+        </div>
+        
+        <div class="admin-grid">
+            <!-- Pending Requests -->
+            <div class="admin-section">
+                <div class="section-header">
+                    <h3 class="section-title-admin">Pending Requests</h3>
+                    <button class="platform-tab" onclick="refreshRequests()">
+                        <i class="fas fa-sync-alt"></i> Refresh
+                    </button>
+                </div>
+                
+                <div class="requests-list scrollable" id="requestsList">
+                    <!-- Requests will be added here -->
+                </div>
             </div>
-            <div class="card" onclick="window.open('php-page.html', '_blank')">
-                <i class="fab fa-php"></i>
-                <h3>PHP</h3>
-                <p>توسعه بک‌اند قدرتمند و سیستم‌های مدیریت محتوا</p>
-            </div>
-            <div class="card" onclick="window.open('telegram-page.html', '_blank')">
-                <i class="fab fa-telegram"></i>
-                <h3>Telegram Bot</h3>
-                <p>ساخت ربات‌های تلگرام با قابلیت‌های پیشرفته و منحصربه‌فرد</p>
-            </div>
-            <div class="card" onclick="window.open('python-page.html', '_blank')">
-                <i class="fab fa-python"></i>
-                <h3>Python</h3>
-                <p>برنامه‌نویسی پایتون برای هوش مصنوعی، داده‌کاوی و اتوماسیون</p>
-            </div>
-            <div class="card" onclick="window.open('javascript-page.html', '_blank')">
-                <i class="fab fa-js-square"></i>
-                <h3>Java Script</h3>
-                <p>ایجاد انیمیشن‌های تعاملی و وب اپلیکیشن‌های داینامیک</p>
-            </div>
-            <div class="card" onclick="window.open('security-page.html', '_blank')">
-                <i class="fas fa-shield-alt"></i>
-                <h3>Security Cyber</h3>
-                <p>امنیت سایبری، تست نفوذ و محافظت از سیستم‌ها</p>
+            
+            <!-- Active Keys -->
+            <div class="admin-section">
+                <div class="section-header">
+                    <h3 class="section-title-admin">Active Keys</h3>
+                    <button class="platform-tab" onclick="refreshKeys()">
+                        <i class="fas fa-sync-alt"></i> Refresh
+                    </button>
+                </div>
+                
+                <div class="keys-list scrollable" id="keysList">
+                    <!-- Active keys will be added here -->
+                </div>
             </div>
         </div>
-    </section>
+    </div>
 
-    <!-- Gaming Section -->
-    <section class="gaming-section">
-        <h2 class="section-title">iTochGaming Code</h2>
-        <div class="cards-container">
-            <div class="card" onclick="window.open('dns-gaming.html', '_blank')">
-                <i class="fas fa-server"></i>
-                <h3>DNS GAMING</h3>
-                <p>بهینه‌سازی DNS برای کاهش پینگ و افزایش سرعت بازی</p>
+    <!-- Key Display -->
+    <div class="key-display" id="keyDisplay">
+        <div class="key-header">
+            <div class="key-icon">
+                <i class="fas fa-key"></i>
             </div>
-            <div class="card" onclick="window.open('wireguard-gaming.html', '_blank')">
-                <i class="fas fa-network-wired"></i>
-                <h3>WireGuard GAMING</h3>
-                <p>کانفیگ‌های مخصوص بازی با اتصال امن و پرسرعت</p>
-            </div>
-            <div class="card" onclick="window.open('config-codm.html', '_blank')">
-                <i class="fas fa-gamepad"></i>
-                <h3>Config CODM</h3>
-                <p>تنظیمات حرفه‌ای گرافیک و کنترل برای کال آف دیوتی موبایل</p>
-            </div>
+            <h3 class="key-title">Active Key</h3>
         </div>
-    </section>
+        
+        <div class="key-timer" id="keyTimer">00:00:00</div>
+        <div class="key-product" id="keyProduct"></div>
+        
+        <div class="key-progress">
+            <div class="key-progress-bar" id="keyProgressBar"></div>
+        </div>
+    </div>
 
-    <!-- Footer -->
-    <footer>
-        <div class="creator">iTochPooYa</div>
-        <p>طراحی و توسعه با بهترین کیفیت و جدیدترین تکنولوژی‌های روز دنیا</p>
-        <p style="margin-top:20px; opacity:0.7;">تمامی حقوق محفوظ است © 2024</p>
-    </footer>
-
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
-        // Particles Config
-        particlesJS('particles-js', {
-            particles: {
-                number: { value: 80, density: { enable: true, value_area: 800 } },
-                color: { value: "#00d9ff" },
-                shape: { type: "circle" },
-                opacity: { value: 0.5, random: true },
-                size: { value: 3, random: true },
-                line_linked: {
-                    enable: true,
-                    distance: 150,
-                    color: "#9d00ff",
-                    opacity: 0.3,
-                    width: 1
-                },
-                move: {
-                    enable: true,
-                    speed: 2,
-                    direction: "none",
-                    random: true,
-                    straight: false,
-                    out_mode: "out",
-                    bounce: false
-                }
-            },
-            interactivity: {
-                detect_on: "canvas",
-                events: {
-                    onhover: { enable: true, mode: "repulse" },
-                    onclick: { enable: true, mode: "push" }
-                }
-            },
-            retina_detect: true
+        // ========== VARIABLES ==========
+        let activeKeyTimer = null;
+        let pendingRequests = [];
+        let activeKeys = [];
+
+        // ========== INITIALIZATION ==========
+        document.addEventListener('DOMContentLoaded', function() {
+            createParticles();
+            loadFromStorage();
         });
 
-        // Code Icon Scroll Effect
-        const codeIcon = document.getElementById('codeIcon');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 200) {
-                codeIcon.classList.add('small');
+        function createParticles() {
+            const container = document.querySelector('.background-elements');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'floating-particle';
+                particle.style.cssText = `
+                    left: ${Math.random() * 100}vw;
+                    animation-delay: ${Math.random() * 20}s;
+                    animation-duration: ${Math.random() * 10 + 20}s;
+                    opacity: ${Math.random() * 0.5 + 0.3};
+                    width: ${Math.random() * 3 + 2}px;
+                    height: ${Math.random() * 3 + 2}px;
+                `;
+                container.appendChild(particle);
+            }
+        }
+
+        // ========== UI FUNCTIONS ==========
+        function showLoginModal() {
+            const modal = document.getElementById('loginModal');
+            modal.style.display = 'flex';
+            setTimeout(() => {
+                modal.style.opacity = '1';
+                document.getElementById('adminPassword').focus();
+            }, 10);
+        }
+
+        function closeLoginModal() {
+            const modal = document.getElementById('loginModal');
+            modal.style.opacity = '0';
+            setTimeout(() => modal.style.display = 'none', 300);
+        }
+
+        function checkPassword() {
+            const password = document.getElementById('adminPassword').value;
+            const correctPassword = 'PooYaSCm1313iT';
+            
+            if (password === correctPassword) {
+                closeLoginModal();
+                showAdminPanel();
             } else {
-                codeIcon.classList.remove('small');
+                alert('❌ Invalid access code!');
+                document.getElementById('adminPassword').value = '';
+                document.getElementById('adminPassword').focus();
+            }
+        }
+
+        function enterGuestMode() {
+            const welcomeScreen = document.getElementById('welcomeScreen');
+            welcomeScreen.style.display = 'flex';
+            
+            setTimeout(() => {
+                welcomeScreen.style.opacity = '0';
+                setTimeout(() => {
+                    welcomeScreen.style.display = 'none';
+                    showGuestContent();
+                }, 500);
+            }, 2000);
+        }
+
+        function showGuestContent() {
+            document.querySelector('.landing-section').style.display = 'none';
+            
+            const sections = ['.eagle-section', '.products-section', '.about-section'];
+            sections.forEach((selector, index) => {
+                const element = document.querySelector(selector);
+                if (element) {
+                    element.style.display = 'flex';
+                    setTimeout(() => {
+                        element.style.opacity = '1';
+                    }, 100 + (index * 200));
+                }
+            });
+        }
+
+        function showAdminPanel() {
+            const adminPanel = document.getElementById('adminPanel');
+            const keyDisplay = document.getElementById('keyDisplay');
+            
+            adminPanel.style.display = 'flex';
+            keyDisplay.style.display = 'block';
+            
+            refreshRequests();
+            refreshKeys();
+            
+            // Create a test key for admin
+            const testKey = {
+                id: Date.now(),
+                product: 'ADMIN ACCESS',
+                code: 'ADMIN-' + generateRandomCode(8),
+                expiresAt: Date.now() + 24 * 60 * 60 * 1000,
+                createdAt: Date.now()
+            };
+            
+            showKeyTimer(testKey);
+        }
+
+        // ========== PRODUCT FUNCTIONS ==========
+        function switchPlatform(tabElement, platform, product) {
+            // Remove active class from all tabs in the same container
+            const tabs = tabElement.parentElement.querySelectorAll('.platform-tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Add active class to clicked tab
+            tabElement.classList.add('active');
+            
+            // Update price based on platform and product
+            const priceElement = tabElement.closest('.product-card').querySelector('.price-value');
+            const prices = {
+                'eren': { android: 400, ios: 450 },
+                'dns': { android: 250, ios: 300 },
+                'wg': { android: 300, ios: 350 }
+            };
+            
+            if (prices[product] && prices[product][platform]) {
+                priceElement.textContent = prices[product][platform];
+            }
+        }
+
+        function purchaseProduct(product) {
+            const code = `${product.toUpperCase().replace(/ /g, '_')}_${generateRandomCode(8)}`;
+            
+            // Add to pending requests
+            const request = {
+                id: Date.now(),
+                product: product,
+                code: code,
+                timestamp: new Date().toLocaleTimeString(),
+                status: 'pending'
+            };
+            
+            pendingRequests.push(request);
+            saveToStorage();
+            
+            alert(`✅ Purchase Code Generated!\n\n📋 Code: ${code}\n\n📨 Send this code to @Aynrx on Telegram to complete your purchase.`);
+            
+            // Refresh admin panel if open
+            if (document.getElementById('adminPanel').style.display === 'flex') {
+                refreshRequests();
+            }
+        }
+
+        function contactForPrice(product) {
+            alert(`💬 For pricing information about "${product}", please contact @Aynrx on Telegram.`);
+        }
+
+        // ========== ADMIN FUNCTIONS ==========
+        function refreshRequests() {
+            const container = document.getElementById('requestsList');
+            container.innerHTML = '';
+            
+            pendingRequests
+                .filter(r => r.status === 'pending')
+                .forEach(request => {
+                    const item = document.createElement('div');
+                    item.className = 'request-item';
+                    
+                    item.innerHTML = `
+                        <div style="margin-bottom: 10px;">
+                            <strong style="color: var(--itochie-cyan);">${request.product}</strong>
+                            <div style="font-size: 0.9rem; color: #aaa; margin-top: 5px;">${request.timestamp}</div>
+                        </div>
+                        <div style="background: rgba(0,0,0,0.5); padding: 10px; border-radius: 8px; font-family: monospace; margin: 10px 0;">
+                            ${request.code}
+                        </div>
+                        <div style="display: flex; gap: 10px; margin-top: 15px;">
+                            <button style="flex: 1; padding: 8px; background: var(--itochie-green); border: none; border-radius: 6px; color: #000; font-weight: bold; cursor: pointer;" 
+                                    onclick="acceptRequest(${request.id})">
+                                Accept
+                            </button>
+                            <button style="flex: 1; padding: 8px; background: var(--itochie-red); border: none; border-radius: 6px; color: white; font-weight: bold; cursor: pointer;" 
+                                    onclick="rejectRequest(${request.id})">
+                                Reject
+                            </button>
+                        </div>
+                    `;
+                    
+                    container.appendChild(item);
+                });
+            
+            if (container.innerHTML === '') {
+                container.innerHTML = '<div style="text-align: center; padding: 20px; color: #666;">No pending requests</div>';
+            }
+        }
+
+        function refreshKeys() {
+            const container = document.getElementById('keysList');
+            container.innerHTML = '';
+            
+            activeKeys.forEach(key => {
+                const timeLeft = calculateTimeLeft(key.expiresAt);
+                const percentage = calculatePercentage(key.createdAt, key.expiresAt);
+                
+                const item = document.createElement('div');
+                item.className = 'key-item';
+                
+                item.innerHTML = `
+                    <div style="margin-bottom: 10px;">
+                        <strong style="color: var(--itochie-cyan);">${key.product}</strong>
+                        <div style="font-size: 0.9rem; color: var(--itochie-green); margin-top: 5px; font-family: monospace;">${key.code}</div>
+                    </div>
+                    <div style="font-size: 0.9rem; color: #aaa; margin: 10px 0;">
+                        <div>Expires: ${new Date(key.expiresAt).toLocaleTimeString()}</div>
+                        <div>Time Left: ${timeLeft.hours}h ${timeLeft.minutes}m</div>
+                    </div>
+                    <div style="height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; margin: 10px 0; overflow: hidden;">
+                        <div style="width: ${percentage}%; height: 100%; background: linear-gradient(90deg, var(--itochie-cyan), var(--itochie-green));"></div>
+                    </div>
+                    <div style="display: flex; gap: 10px; margin-top: 15px;">
+                        <button style="flex: 1; padding: 8px; background: var(--itochie-yellow); border: none; border-radius: 6px; color: #000; font-weight: bold; cursor: pointer;" 
+                                onclick="extendKey(${key.id})">
+                            Extend
+                        </button>
+                        <button style="flex: 1; padding: 8px; background: var(--itochie-red); border: none; border-radius: 6px; color: white; font-weight: bold; cursor: pointer;" 
+                                onclick="revokeKey(${key.id})">
+                            Revoke
+                        </button>
+                    </div>
+                `;
+                
+                container.appendChild(item);
+            });
+            
+            if (container.innerHTML === '') {
+                container.innerHTML = '<div style="text-align: center; padding: 20px; color: #666;">No active keys</div>';
+            }
+        }
+
+        function acceptRequest(requestId) {
+            const request = pendingRequests.find(r => r.id === requestId);
+            if (!request) return;
+            
+            // Get duration (default 24 hours)
+            const duration = 24; // hours
+            
+            const expiresAt = Date.now() + (duration * 60 * 60 * 1000);
+            
+            // Create key
+            const key = {
+                id: Date.now(),
+                product: request.product,
+                code: request.code,
+                createdAt: Date.now(),
+                expiresAt: expiresAt
+            };
+            
+            // Update request status
+            request.status = 'accepted';
+            
+            // Add to active keys
+            activeKeys.push(key);
+            
+            // Save to storage
+            saveToStorage();
+            
+            // Refresh displays
+            refreshRequests();
+            refreshKeys();
+            
+            // Show key timer
+            showKeyTimer(key);
+            
+            alert(`✅ Request accepted! Key activated for ${duration} hours.`);
+        }
+
+        function rejectRequest(requestId) {
+            const request = pendingRequests.find(r => r.id === requestId);
+            if (request) {
+                request.status = 'rejected';
+                saveToStorage();
+                refreshRequests();
+                alert('❌ Request rejected.');
+            }
+        }
+
+        function extendKey(keyId) {
+            const key = activeKeys.find(k => k.id === keyId);
+            if (!key) return;
+            
+            const extension = prompt('Extend key by how many hours?', '24');
+            if (!extension || isNaN(extension)) return;
+            
+            const hours = parseInt(extension);
+            key.expiresAt += hours * 60 * 60 * 1000;
+            
+            saveToStorage();
+            refreshKeys();
+            
+            alert(`✅ Key extended by ${hours} hours.`);
+        }
+
+        function revokeKey(keyId) {
+            if (confirm('Are you sure you want to revoke this key?')) {
+                activeKeys = activeKeys.filter(k => k.id !== keyId);
+                saveToStorage();
+                refreshKeys();
+                alert('✅ Key revoked.');
+            }
+        }
+
+        function showKeyTimer(key) {
+            if (activeKeyTimer) {
+                clearInterval(activeKeyTimer);
+            }
+            
+            const display = document.getElementById('keyDisplay');
+            const timer = document.getElementById('keyTimer');
+            const product = document.getElementById('keyProduct');
+            const progressBar = document.getElementById('keyProgressBar');
+            
+            product.textContent = key.product;
+            
+            function updateTimer() {
+                const now = Date.now();
+                const remaining = key.expiresAt - now;
+                
+                if (remaining <= 0) {
+                    timer.textContent = 'EXPIRED';
+                    progressBar.style.width = '0%';
+                    clearInterval(activeKeyTimer);
+                    return;
+                }
+                
+                const hours = Math.floor(remaining / (1000 * 60 * 60));
+                const minutes = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((remaining % (1000 * 60)) / 1000);
+                
+                timer.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                const total = key.expiresAt - key.createdAt;
+                const percentage = (remaining / total) * 100;
+                progressBar.style.width = `${percentage}%`;
+            }
+            
+            updateTimer();
+            activeKeyTimer = setInterval(updateTimer, 1000);
+        }
+
+        // ========== HELPER FUNCTIONS ==========
+        function generateRandomCode(length) {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let result = '';
+            for (let i = 0; i < length; i++) {
+                result += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return result;
+        }
+
+        function calculateTimeLeft(expiresAt) {
+            const now = Date.now();
+            const remaining = expiresAt - now;
+            
+            if (remaining <= 0) {
+                return { hours: 0, minutes: 0, seconds: 0 };
+            }
+            
+            const hours = Math.floor(remaining / (1000 * 60 * 60));
+            const minutes = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((remaining % (1000 * 60)) / 1000);
+            
+            return { hours, minutes, seconds };
+        }
+
+        function calculatePercentage(startAt, expiresAt) {
+            const now = Date.now();
+            const total = expiresAt - startAt;
+            const elapsed = now - startAt;
+            
+            if (now >= expiresAt) return 0;
+            if (now <= startAt) return 100;
+            
+            return ((total - elapsed) / total) * 100;
+        }
+
+        // ========== STORAGE FUNCTIONS ==========
+        function saveToStorage() {
+            try {
+                localStorage.setItem('iToch_pendingRequests', JSON.stringify(pendingRequests));
+                localStorage.setItem('iToch_activeKeys', JSON.stringify(activeKeys));
+            } catch (e) {
+                console.error('Failed to save to localStorage:', e);
+            }
+        }
+
+        function loadFromStorage() {
+            try {
+                const savedRequests = localStorage.getItem('iToch_pendingRequests');
+                const savedKeys = localStorage.getItem('iToch_activeKeys');
+                
+                if (savedRequests) {
+                    pendingRequests = JSON.parse(savedRequests);
+                }
+                
+                if (savedKeys) {
+                    activeKeys = JSON.parse(savedKeys);
+                    
+                    // Filter out expired keys
+                    const now = Date.now();
+                    activeKeys = activeKeys.filter(key => key.expiresAt > now);
+                    
+                    saveToStorage();
+                }
+            } catch (e) {
+                console.error('Failed to load from localStorage:', e);
+            }
+        }
+
+        // ========== EVENT LISTENERS ==========
+        document.getElementById('loginModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeLoginModal();
             }
         });
 
-        // Card Click Animation
-        document.querySelectorAll('.card').forEach(card => {
-            card.addEventListener('click', function() {
-                this.style.transform = 'scale(0.95)';
-                setTimeout(() => {
-                    this.style.transform = '';
-                }, 200);
-            });
+        document.getElementById('adminPassword').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
         });
 
-        // Console Log
-        console.log('%c🔥 iTochWeb - توسط iTochPooYa ساخته شد 🔥', 'color: #00d9ff; font-size: 16px; font-weight: bold;');
-        console.log('%c📱 Telegram: @Aynrx', 'color: #0088cc; font-size: 14px;');
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeLoginModal();
+            }
+        });
     </script>
 </body>
 </html>
