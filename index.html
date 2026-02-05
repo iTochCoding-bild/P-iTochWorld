@@ -1,11 +1,439 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebSite  Test iToch</title>
+    <title>iTochWeb | iTochPooYa</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset & Base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #00d9ff;
+            --secondary: #9d00ff;
+            --dark: #0a0a16;
+            --darker: #050510;
+            --code-bg: #1a1a2e;
+            --gaming-bg: #1a0022;
+            --text: #f0f0f0;
+            --glow: 0 0 15px var(--primary);
+        }
+
+        body {
+            background: var(--darker);
+            color: var(--text);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Particles Background */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        /* Header & Logo Animation */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(5, 5, 16, 0.9);
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: var(--glow);
+        }
+
+        .logo span {
+            color: #ff0066;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .code-icon {
+            font-size: 15rem;
+            color: var(--primary);
+            margin-bottom: 30px;
+            animation: float 3s ease-in-out infinite, glow 2s infinite alternate;
+            cursor: pointer;
+            transition: all 0.5s ease;
+        }
+
+        .code-icon.small {
+            font-size: 3rem;
+            position: fixed;
+            top: 20px;
+            right: 120px;
+            animation: none;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 10px var(--primary)); }
+            to { filter: drop-shadow(0 0 25px var(--secondary)); }
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, #00d9ff, #ff00cc);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            max-width: 800px;
+            opacity: 0.9;
+        }
+
+        /* Sections */
+        section {
+            padding: 100px 40px;
+        }
+
+        .section-title {
+            font-size: 2.8rem;
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+
+        /* Cards */
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: var(--code-bg);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            border: 2px solid transparent;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary), #ff0066);
+            z-index: -1;
+            border-radius: 22px;
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card:hover {
+            transform: translateY(-15px) scale(1.03);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .card i {
+            font-size: 4rem;
+            margin-bottom: 25px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+
+        .card p {
+            opacity: 0.8;
+            font-size: 1.1rem;
+        }
+
+        /* Code Section */
+        .code-section {
+            background: linear-gradient(135deg, var(--dark), #111125);
+        }
+
+        /* Gaming Section */
+        .gaming-section {
+            background: linear-gradient(135deg, var(--gaming-bg), #2a0044);
+        }
+
+        .gaming-section .card {
+            background: rgba(255, 0, 204, 0.05);
+            border-color: #ff00cc;
+        }
+
+        /* Footer & Creator */
+        footer {
+            text-align: center;
+            padding: 60px 20px;
+            background: rgba(0, 0, 0, 0.7);
+            border-top: 3px solid var(--primary);
+        }
+
+        .creator {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #ff0066, #9d00ff, #00d9ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 20px rgba(157, 0, 255, 0.5);
+        }
+
+        /* Telegram Button */
+        .telegram-btn {
+            display: inline-block;
+            background: linear-gradient(45deg, #0088cc, #00d9ff);
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            padding: 18px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            margin-top: 40px;
+            box-shadow: 0 10px 25px rgba(0, 136, 204, 0.4);
+            transition: all 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+
+        .telegram-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 136, 204, 0.6);
+            background: linear-gradient(45deg, #00d9ff, #0088cc);
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .code-icon { font-size: 10rem; }
+            .section-title { font-size: 2.2rem; }
+            .cards-container { grid-template-columns: 1fr; }
+            .creator { font-size: 2rem; }
+        }
+    </style>
 </head>
 <body>
-    <h1>PooYa iToch WEB </h1>
+    <!-- Particles Background -->
+    <div id="particles-js"></div>
+
+    <!-- Header -->
+    <header>
+        <div class="logo">iToch<span>Web</span></div>
+        <div class="telegram-btn-small">
+            <a href="https://t.me/Aynrx" target="_blank" style="color:#00d9ff; text-decoration:none;">
+                <i class="fab fa-telegram"></i> تلگرام
+            </a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="code-icon" id="codeIcon">
+            <i class="fas fa-code"></i>
+        </div>
+        <h1>iTochPooYa</h1>
+        <p>حرفه‌ای‌ترین دنیای کدنویسی و گیمینگ با مدرن‌ترین تکنولوژی‌ها</p>
+        <a href="https://t.me/Aynrx" target="_blank" class="telegram-btn">
+            <i class="fab fa-telegram"></i> خرید از پیوی تلگرام
+        </a>
+    </section>
+
+    <!-- Code Section -->
+    <section class="code-section">
+        <h2 class="section-title">Code iToch 1</h2>
+        <div class="cards-container">
+            <div class="card" onclick="window.open('html-page.html', '_blank')">
+                <i class="fab fa-html5"></i>
+                <h3>HTML Web</h3>
+                <p>طراحی وبسایت‌های مدرن و ریسپانسیو با جدیدترین استانداردها</p>
+            </div>
+            <div class="card" onclick="window.open('php-page.html', '_blank')">
+                <i class="fab fa-php"></i>
+                <h3>PHP</h3>
+                <p>توسعه بک‌اند قدرتمند و سیستم‌های مدیریت محتوا</p>
+            </div>
+            <div class="card" onclick="window.open('telegram-page.html', '_blank')">
+                <i class="fab fa-telegram"></i>
+                <h3>Telegram Bot</h3>
+                <p>ساخت ربات‌های تلگرام با قابلیت‌های پیشرفته و منحصربه‌فرد</p>
+            </div>
+            <div class="card" onclick="window.open('python-page.html', '_blank')">
+                <i class="fab fa-python"></i>
+                <h3>Python</h3>
+                <p>برنامه‌نویسی پایتون برای هوش مصنوعی، داده‌کاوی و اتوماسیون</p>
+            </div>
+            <div class="card" onclick="window.open('javascript-page.html', '_blank')">
+                <i class="fab fa-js-square"></i>
+                <h3>Java Script</h3>
+                <p>ایجاد انیمیشن‌های تعاملی و وب اپلیکیشن‌های داینامیک</p>
+            </div>
+            <div class="card" onclick="window.open('security-page.html', '_blank')">
+                <i class="fas fa-shield-alt"></i>
+                <h3>Security Cyber</h3>
+                <p>امنیت سایبری، تست نفوذ و محافظت از سیستم‌ها</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gaming Section -->
+    <section class="gaming-section">
+        <h2 class="section-title">iTochGaming Code</h2>
+        <div class="cards-container">
+            <div class="card" onclick="window.open('dns-gaming.html', '_blank')">
+                <i class="fas fa-server"></i>
+                <h3>DNS GAMING</h3>
+                <p>بهینه‌سازی DNS برای کاهش پینگ و افزایش سرعت بازی</p>
+            </div>
+            <div class="card" onclick="window.open('wireguard-gaming.html', '_blank')">
+                <i class="fas fa-network-wired"></i>
+                <h3>WireGuard GAMING</h3>
+                <p>کانفیگ‌های مخصوص بازی با اتصال امن و پرسرعت</p>
+            </div>
+            <div class="card" onclick="window.open('config-codm.html', '_blank')">
+                <i class="fas fa-gamepad"></i>
+                <h3>Config CODM</h3>
+                <p>تنظیمات حرفه‌ای گرافیک و کنترل برای کال آف دیوتی موبایل</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="creator">iTochPooYa</div>
+        <p>طراحی و توسعه با بهترین کیفیت و جدیدترین تکنولوژی‌های روز دنیا</p>
+        <p style="margin-top:20px; opacity:0.7;">تمامی حقوق محفوظ است © 2024</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // Particles Config
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 80, density: { enable: true, value_area: 800 } },
+                color: { value: "#00d9ff" },
+                shape: { type: "circle" },
+                opacity: { value: 0.5, random: true },
+                size: { value: 3, random: true },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: "#9d00ff",
+                    opacity: 0.3,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 2,
+                    direction: "none",
+                    random: true,
+                    straight: false,
+                    out_mode: "out",
+                    bounce: false
+                }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: { enable: true, mode: "repulse" },
+                    onclick: { enable: true, mode: "push" }
+                }
+            },
+            retina_detect: true
+        });
+
+        // Code Icon Scroll Effect
+        const codeIcon = document.getElementById('codeIcon');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 200) {
+                codeIcon.classList.add('small');
+            } else {
+                codeIcon.classList.remove('small');
+            }
+        });
+
+        // Card Click Animation
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('click', function() {
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 200);
+            });
+        });
+
+        // Console Log
+        console.log('%c🔥 iTochWeb - توسط iTochPooYa ساخته شد 🔥', 'color: #00d9ff; font-size: 16px; font-weight: bold;');
+        console.log('%c📱 Telegram: @Aynrx', 'color: #0088cc; font-size: 14px;');
+    </script>
 </body>
 </html>
